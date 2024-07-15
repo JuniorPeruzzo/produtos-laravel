@@ -24,11 +24,12 @@ class BrandController extends Controller {
             'name.required' => 'O campo nome é obrigatório.',
         ]);
 
-        $path = $request->file('photo') ? $request->file('photo')->store('photos') : null;
+        $path = uniqid() . "." . $request->file("photo")->extension();
+        $request->file("photo")->storeAs("public", $path);
 
         Brand::create([
             'name' => $request->name,
-            'photo' => $path,
+            'photo' =>  $path,
         ]);
 
         return redirect()->route('brands.index');
@@ -47,11 +48,10 @@ class BrandController extends Controller {
         ]);
 
         if ($request->hasFile('photo')) {
-            if ($brand->photo) {
-                Storage::delete($brand->photo);
-            }
-            $path = $request->file('photo')->store('photos');
-            $brand->update(['photo' => $path]);
+            $path = uniqid() . "." . $request->file("photo")->extension();
+            $request->file("photo")->storeAs("public", $path);
+
+            $brand->photo = $path;
         }
 
         $brand->update($request->only(['name']));

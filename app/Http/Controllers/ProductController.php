@@ -35,7 +35,8 @@ class ProductController extends Controller {
             'category_id.required' => 'O campo categoria é obrigatório.',
         ]);
 
-        $path = $request->file('photo') ? $request->file('photo')->store('photos') : null;
+        $path = uniqid() . "." . $request->file("photo")->extension();
+        $request->file("photo")->storeAs("public", $path);
 
         Product::create([
             'name' => $request->name,
@@ -74,10 +75,9 @@ class ProductController extends Controller {
         ]);
 
         if ($request->hasFile('photo')) {
-            if ($product->photo) {
-                Storage::delete($product->photo);
-            }
-            $path = $request->file('photo')->store('photos');
+            $path = uniqid() . "." . $request->file("photo")->extension();
+            $request->file("photo")->storeAs("public", $path);
+
             $product->photo = $path;
         }
 
