@@ -9,7 +9,7 @@
     <ul class="list-group">
         @foreach($categories as $category)
         <li class="list-group-item">
-            {{ $category->name }} - {{ $category->description }}
+            {{ $category->name }}
             <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-warning mx-2">Editar</a>
             <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
                 @csrf

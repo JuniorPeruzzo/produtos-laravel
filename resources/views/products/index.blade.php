@@ -9,7 +9,7 @@
     <ul class="list-group">
         @foreach($products as $product)
         <li class="list-group-item">
-            {{ $product->name }} - {{ $product->brand->name }} - {{ $product->category->name }}
+            Nome: {{ $product->name }} | Marca: {{ $product->brand->name }} | Categoria: {{ $product->category->name }}
             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-warning mx-2">Editar</a>
             <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
                 @csrf
