@@ -24,8 +24,12 @@ class BrandController extends Controller {
             'name.required' => 'O campo nome é obrigatório.',
         ]);
 
-        $path = uniqid() . "." . $request->file("photo")->extension();
-        $request->file("photo")->storeAs("public", $path);
+        if ($request->hasFile('photo')) {
+            $path = uniqid() . "." . $request->file("photo")->extension();
+            $request->file("photo")->storeAs("public", $path);
+        } else {
+            $path = null;
+        }
 
         Brand::create([
             'name' => $request->name,
